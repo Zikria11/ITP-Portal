@@ -1,0 +1,45 @@
+Develop a centralized web portal for the Volunteer in Service (VIS) Program with Islamabad Traffic Police, focusing on attendance, scheduling, and highlights management for efficient communication and record-keeping. 
+
+🎯 **Objective**: Eliminate manual paperwork and WhatsApp/text-based communication by digitizing attendance and planning processes, providing a professional and exportable platform. 
+
+💻 **Target Users**: 
+1. **Primary Admin**: CR (Class Representative) responsible for managing the system.
+2. **Secondary (Optional)**: Fellow students, for viewing schedules and attendance summaries. 
+
+🔨 **Core Features**:
+1. **Attendance Management System**:
+   - **Student Registry**: Add, update, and delete student information (Name, Reg No, Batch).
+   - **Mark Attendance**: Display all registered students for a selected date, with options to mark 'Present' or default 'Absent'.
+   - **View Past Attendance**: Filter by student name, reg no, or batch and export data to Excel.
+   - **Bonus**: Bulk attendance import and monthly attendance report generation.
+
+2. **Daily Highlights / Visit Points**:
+   - **Add New Entry**: Include date, title, and description with rich text support.
+   - **View Archive**: Display entries in reverse-chronological order.
+   - **Bonus**: Image uploads and shareable links.
+
+3. **Schedule Manager**:
+   - **Add New Schedule**: Record date, time, title, description, and optional location.
+   - **Display Schedule**: Show today's and tomorrow's schedule on the dashboard.
+   - **Bonus**: Google Calendar sync and email notifications.
+
+🎨 **UI/UX Design Requirements**:
+- **Dashboard**: Quick access to today's schedule, attendance marking, and daily highlights posting.
+- **Navigation Bar**: Includes links to Dashboard, Attendance, Highlights, and Schedule.
+- **Mobile-Responsive**: Ensure seamless operation on mobile devices.
+- **Dark Mode**: Provide an optional dark mode for user comfort.
+
+📊 **Database Schema**:
+1. **Students**: id (PK), name, reg_no, batch
+2. **Attendance**: id (PK), student_id (FK → students.id), date, status
+3. **Highlights**: id (PK), date, title, description
+4. **Schedule**: id (PK), date, title, description, location
+
+🔐 **Authentication**:
+- Implement a login system with admin privileges.
+- Admins can create student and admin accounts, with students requiring admin approval post-signup.
+- Students must provide full name, email, password, and registration number for account creation.
+
+💻 **Technical Considerations**:
+- The portal should be developed as a responsive web app with a modern UI/UX style, using frameworks like React or Vue.js. 
+- Utilize a color palette that is professional yet engaging, such as navy blue, white, and light grey, drawing inspiration from platforms like Notion for a minimalistic approach.
