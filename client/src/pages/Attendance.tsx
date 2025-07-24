@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Download } from "lucide-react";
+import { Download, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 
@@ -63,6 +63,36 @@ export default function Attendance() {
     });
   };
 
+  const changeDate = (direction: number) => {
+    const currentDate = new Date(selectedDate);
+    currentDate.setDate(currentDate.getDate() + direction);
+    setSelectedDate(currentDate.toISOString().split('T')[0]);
+  };
+
+  const setToday = () => {
+    setSelectedDate(new Date().toISOString().split('T')[0]);
+  };
+
+  const formatDisplayDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    
+    if (dateString === today.toISOString().split('T')[0]) {
+      return "Today";
+    } else if (dateString === yesterday.toISOString().split('T')[0]) {
+      return "Yesterday";
+    } else {
+      return date.toLocaleDateString('en-US', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+    }
+  };
+
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -88,16 +118,45 @@ export default function Attendance() {
             <div>
               <h2 className="text-xl font-semibold">Attendance Management</h2>
               <p className="text-sm text-muted-foreground">
-                Mark and track student attendance
+                Mark and track student attendance for {formatDisplayDate(selectedDate)}
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Input
-                type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
-                className="w-auto"
-              />
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => changeDate(-1)}
+                  className="px-2"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </Button>
+                <div className="flex items-center gap-2 bg-muted/50 rounded-md px-3 py-2">
+                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                  <Input
+                    type="date"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    className="w-auto border-0 bg-transparent p-0 focus-visible:ring-0"
+                  />
+                </div>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => changeDate(1)}
+                  className="px-2"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={setToday}
+                  className="text-xs"
+                >
+                  Today
+                </Button>
+              </div>
               <Button 
                 variant="outline" 
                 className="gap-2 bg-green-50 border-green-200 text-green-800 hover:bg-green-100"
