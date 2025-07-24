@@ -6,6 +6,7 @@ import {
   jsonb,
   index,
   serial,
+  integer,
   boolean,
   date,
 } from "drizzle-orm/pg-core";
@@ -62,7 +63,7 @@ export const admins = pgTable("admins", {
 // Attendance table
 export const attendance = pgTable("attendance", {
   id: serial("id").primaryKey(),
-  studentId: serial("student_id").references(() => students.id),
+  studentId: integer("student_id").references(() => students.id),
   date: date("date").notNull(),
   status: varchar("status").notNull().default("absent"), // present, absent
   markedBy: varchar("marked_by").references(() => users.id),
