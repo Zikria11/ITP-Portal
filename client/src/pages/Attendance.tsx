@@ -146,6 +146,7 @@ export default function Attendance() {
               <table className="w-full">
                 <thead>
                   <tr className="border-b">
+                    <th className="text-left py-3 px-4 font-medium">S#</th>
                     <th className="text-left py-3 px-4 font-medium">Student</th>
                     <th className="text-left py-3 px-4 font-medium">Reg No</th>
                     <th className="text-left py-3 px-4 font-medium">Batch</th>
@@ -154,10 +155,15 @@ export default function Attendance() {
                   </tr>
                 </thead>
                 <tbody>
-                  {(students as any)?.map((student: any) => {
+                  {(students as any)?.map((student: any, index: number) => {
                     const status = attendanceMap.get(student.id) || "absent";
                     return (
                       <tr key={student.id} className="border-b">
+                        <td className="py-4 px-4">
+                          <span className="text-sm font-medium text-muted-foreground">
+                            {index + 1}
+                          </span>
+                        </td>
                         <td className="py-4 px-4">
                           <div className="flex items-center">
                             <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
