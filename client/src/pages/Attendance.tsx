@@ -43,12 +43,23 @@ export default function Attendance() {
     },
   });
 
-  const toggleAttendance = (studentId: number, currentStatus: string) => {
-    const newStatus = currentStatus === "present" ? "absent" : "present";
+  const toggleAttendance = (studentId: number, newStatus: string) => {
     markAttendanceMutation.mutate({
       studentId,
       date: selectedDate,
       status: newStatus,
+    });
+  };
+
+  const markAllAttendance = (status: string) => {
+    if (!(students as any)) return;
+    
+    (students as any).forEach((student: any) => {
+      markAttendanceMutation.mutate({
+        studentId: student.id,
+        date: selectedDate,
+        status: status,
+      });
     });
   };
 
@@ -87,6 +98,22 @@ export default function Attendance() {
                 onChange={(e) => setSelectedDate(e.target.value)}
                 className="w-auto"
               />
+              <Button 
+                variant="outline" 
+                className="gap-2 bg-green-50 border-green-200 text-green-800 hover:bg-green-100"
+                onClick={() => markAllAttendance("present")}
+                disabled={markAttendanceMutation.isPending}
+              >
+                Mark All Present
+              </Button>
+              <Button 
+                variant="outline" 
+                className="gap-2 bg-red-50 border-red-200 text-red-800 hover:bg-red-100"
+                onClick={() => markAllAttendance("absent")}
+                disabled={markAttendanceMutation.isPending}
+              >
+                Mark All Absent
+              </Button>
               <Button variant="outline" className="gap-2">
                 <Download className="h-4 w-4" />
                 Export
@@ -164,14 +191,26 @@ export default function Attendance() {
                           </Badge>
                         </td>
                         <td className="py-4 px-4 text-right">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => toggleAttendance(student.id, status)}
-                            disabled={markAttendanceMutation.isPending}
-                          >
-                            Toggle
-                          </Button>
+                          <div className="flex gap-2 justify-end">
+                            <Button
+                              variant={status === "present" ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => toggleAttendance(student.id, "present")}
+                              disabled={markAttendanceMutation.isPending}
+                              className={status === "present" ? "bg-green-600 hover:bg-green-700 text-white" : "border-green-600 text-green-600 hover:bg-green-50"}
+                            >
+                              Present
+                            </Button>
+                            <Button
+                              variant={status === "absent" ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => toggleAttendance(student.id, "absent")}
+                              disabled={markAttendanceMutation.isPending}
+                              className={status === "absent" ? "bg-red-600 hover:bg-red-700 text-white" : "border-red-600 text-red-600 hover:bg-red-50"}
+                            >
+                              Absent
+                            </Button>
+                          </div>
                         </td>
                       </tr>
                     );
