@@ -5,6 +5,7 @@
 ### Authentication Method
 - **Portal URL**: Use the main application URL
 - **Login Method**: Click "Sign in" and use Replit authentication
+- **Important**: This system uses Replit Auth - students log in with their Replit accounts, not traditional passwords
 - **Batch**: All students are assigned to VIS-2025 batch
 - **Status**: All accounts are pre-approved and active
 
@@ -60,6 +61,8 @@
 | 46 | Sufyan Abbasi | BSE243055 | sufyan.abbasi@vis2025.edu.pk | BSE243055 | %Dell3055 |
 | 47 | Muhammad Saif Ali Khan | BSE243149 | saif.khan@vis2025.edu.pk | BSE243149 | %Dell3149 |
 | 48 | Ammar Haider | BSE243212 | ammar.haider@vis2025.edu.pk | BSE243212 | %Dell3212 |
+| 49 | Malaika Shahid | BAB233008 | malaika.shahid@vis2025.edu.pk | BAB233008 | %Dell3008 |
+| 50 | Saif Ullah Khan Lodhi | BBA213163 | saifullah.khan@vis2025.edu.pk | BBA213163 | %Dell3163 |
 
 ### Important Notes:
 1. **All students are assigned to VIS-2025 batch automatically**
@@ -72,7 +75,13 @@
 1. Go to the VIS Portal website
 2. Click "Sign in" 
 3. Use Replit authentication (students will need to create/use their Replit accounts)
-4. Once authenticated, they'll have access to their student dashboard
+4. Once authenticated through Replit, they'll have access to their student dashboard
+
+### Important Notes About Authentication:
+- **Current System**: Uses Replit Auth (OAuth) - students log in through their Replit accounts
+- **No Traditional Passwords**: The password format (%Dell + last 4 digits) listed above is for reference only
+- **Student Access**: Once a student logs in through Replit, their account is automatically linked to their student record
+- **Admin Approval**: All VIS-2025 students are pre-approved, no additional approval needed
 5. They can view their attendance, program highlights, and schedule
 
 ### Admin Functions Available:
