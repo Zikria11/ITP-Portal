@@ -12,6 +12,8 @@ import { apiRequest } from "@/lib/queryClient";
 
 export default function Students() {
   const [open, setOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
+  const [editingStudent, setEditingStudent] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -66,6 +68,29 @@ export default function Students() {
     },
   });
 
+  const updateMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: number; data: any }) => {
+      await apiRequest("PATCH", `/api/students/${id}`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/students"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/students/pending"] });
+      setEditOpen(false);
+      setEditingStudent(null);
+      toast({
+        title: "Success",
+        description: "Student updated successfully.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to update student.",
+        variant: "destructive",
+      });
+    },
+  });
+
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
       await apiRequest("DELETE", `/api/students/${id}`);
@@ -109,10 +134,27 @@ export default function Students() {
     updateStatusMutation.mutate({ id, status: "rejected" });
   };
 
+  const handleEdit = (student: any) => {
+    setEditingStudent(student);
+    setEditOpen(true);
+  };
+
   const handleDelete = (id: number) => {
     if (window.confirm("Are you sure you want to delete this student?")) {
       deleteMutation.mutate(id);
     }
+  };
+
+  const handleEditSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name") as string,
+      email: formData.get("email") as string,
+      regNo: formData.get("regNo") as string,
+      batch: formData.get("batch") as string,
+    };
+    updateMutation.mutate({ id: editingStudent.id, data });
   };
 
   const getInitials = (name: string) => {
@@ -326,7 +368,11 @@ export default function Students() {
                         </Badge>
                       </td>
                       <td className="py-4 px-4 text-right space-x-2">
-                        <Button variant="ghost" size="sm">
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => handleEdit(student)}
+                        >
                           <Edit className="h-4 w-4" />
                         </Button>
                         <Button
@@ -345,6 +391,69 @@ export default function Students() {
           )}
         </CardContent>
       </Card>
+
+      {/* Edit Student Dialog */}
+      <Dialog open={editOpen} onOpenChange={setEditOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Student</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleEditSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="edit-name">Full Name</Label>
+              <Input
+                id="edit-name"
+                name="name"
+                defaultValue={editingStudent?.name}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-email">Email</Label>
+              <Input
+                id="edit-email"
+                name="email"
+                type="email"
+                defaultValue={editingStudent?.email}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-regNo">Registration Number</Label>
+              <Input
+                id="edit-regNo"
+                name="regNo"
+                defaultValue={editingStudent?.regNo}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-batch">Batch</Label>
+              <Input
+                id="edit-batch"
+                name="batch"
+                defaultValue={editingStudent?.batch}
+                required
+              />
+            </div>
+            <div className="flex justify-end space-x-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setEditOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                disabled={updateMutation.isPending}
+              >
+                {updateMutation.isPending ? "Updating..." : "Update Student"}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

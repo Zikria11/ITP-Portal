@@ -31,6 +31,7 @@ export interface IStorage {
   getStudentById(id: number): Promise<Student | undefined>;
   getStudentByUserId(userId: string): Promise<Student | undefined>;
   createStudent(student: InsertStudent): Promise<Student>;
+  updateStudent(id: number, data: Partial<InsertStudent>): Promise<Student>;
   updateStudentStatus(id: number, status: string): Promise<Student>;
   deleteStudent(id: number): Promise<void>;
   getPendingStudents(): Promise<Student[]>;
@@ -104,6 +105,15 @@ export class DatabaseStorage implements IStorage {
   async createStudent(student: InsertStudent): Promise<Student> {
     const [newStudent] = await db.insert(students).values(student).returning();
     return newStudent;
+  }
+
+  async updateStudent(id: number, data: Partial<InsertStudent>): Promise<Student> {
+    const [student] = await db
+      .update(students)
+      .set({ ...data, updatedAt: new Date() })
+      .where(eq(students.id, id))
+      .returning();
+    return student;
   }
 
   async updateStudentStatus(id: number, status: string): Promise<Student> {

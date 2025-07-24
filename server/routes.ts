@@ -107,6 +107,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.patch("/api/students/:id", isAuthenticated, isAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      const updateData = req.body;
+      const student = await storage.updateStudent(id, updateData);
+      res.json(student);
+    } catch (error) {
+      console.error("Error updating student:", error);
+      res.status(400).json({ message: "Failed to update student" });
+    }
+  });
+
   app.delete("/api/students/:id", isAuthenticated, isAdmin, async (req, res) => {
     try {
       const id = parseInt(req.params.id);
