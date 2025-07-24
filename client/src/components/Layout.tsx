@@ -30,7 +30,7 @@ export default function Layout({ children }: LayoutProps) {
     { name: "Attendance", href: "/attendance", icon: UserCheck },
     { name: "Highlights", href: "/highlights", icon: Star },
     { name: "Schedule", href: "/schedule", icon: Calendar },
-    ...(user?.role === "admin"
+    ...((user as any)?.role === "admin"
       ? [
           { name: "Students", href: "/students", icon: Users },
           { name: "Admins", href: "/admins", icon: Shield },
@@ -102,15 +102,15 @@ export default function Layout({ children }: LayoutProps) {
             <div className="flex items-center">
               <div className="h-8 w-8 bg-primary rounded-full flex items-center justify-center">
                 <span className="text-sm font-medium text-primary-foreground">
-                  {user ? getInitials(user.firstName + " " + user.lastName) : "U"}
+                  {user ? getInitials((user as any).firstName + " " + (user as any).lastName) : "U"}
                 </span>
               </div>
               <div className="ml-3 flex-1">
                 <p className="text-sm font-medium text-gray-900 dark:text-white">
-                  {user?.firstName} {user?.lastName}
+                  {(user as any)?.firstName} {(user as any)?.lastName}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-gray-400 capitalize">
-                  {user?.role}
+                  {(user as any)?.role}
                 </p>
               </div>
               <Button

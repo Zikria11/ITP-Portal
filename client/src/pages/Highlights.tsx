@@ -113,7 +113,7 @@ export default function Highlights() {
     }
   };
 
-  const isAdmin = user?.role === "admin";
+  const isAdmin = (user as any)?.role === "admin";
 
   return (
     <div className="space-y-6">
@@ -203,8 +203,8 @@ export default function Highlights() {
       <div className="space-y-6">
         {isLoading ? (
           <div className="text-center py-8">Loading highlights...</div>
-        ) : highlights && highlights.length > 0 ? (
-          highlights.map((highlight: any) => (
+        ) : (highlights as any) && (highlights as any).length > 0 ? (
+          (highlights as any).map((highlight: any) => (
             <Card key={highlight.id}>
               <CardContent className="p-6">
                 <div className="flex items-start justify-between mb-4">

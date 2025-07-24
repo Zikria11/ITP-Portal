@@ -61,12 +61,12 @@ export default function Attendance() {
   };
 
   const attendanceMap = new Map();
-  attendance?.forEach((record: any) => {
+  (attendance as any)?.forEach((record: any) => {
     attendanceMap.set(record.studentId, record.status);
   });
 
-  const presentCount = attendance?.filter((a: any) => a.status === "present").length || 0;
-  const absentCount = (students?.length || 0) - presentCount;
+  const presentCount = (attendance as any)?.filter((a: any) => a.status === "present").length || 0;
+  const absentCount = ((students as any)?.length || 0) - presentCount;
 
   return (
     <div className="space-y-6">
@@ -127,7 +127,7 @@ export default function Attendance() {
                   </tr>
                 </thead>
                 <tbody>
-                  {students?.map((student: any) => {
+                  {(students as any)?.map((student: any) => {
                     const status = attendanceMap.get(student.id) || "absent";
                     return (
                       <tr key={student.id} className="border-b">

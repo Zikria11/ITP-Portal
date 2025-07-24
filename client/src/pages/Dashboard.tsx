@@ -32,7 +32,7 @@ export default function Dashboard() {
                 <p className="text-sm font-medium text-muted-foreground">
                   Total Students
                 </p>
-                <p className="text-2xl font-semibold">{stats?.totalStudents || 0}</p>
+                <p className="text-2xl font-semibold">{(stats as any)?.totalStudents || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -48,7 +48,7 @@ export default function Dashboard() {
                 <p className="text-sm font-medium text-muted-foreground">
                   Present Today
                 </p>
-                <p className="text-2xl font-semibold">{stats?.presentToday || 0}</p>
+                <p className="text-2xl font-semibold">{(stats as any)?.presentToday || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -64,7 +64,7 @@ export default function Dashboard() {
                 <p className="text-sm font-medium text-muted-foreground">
                   Pending Approvals
                 </p>
-                <p className="text-2xl font-semibold">{stats?.pendingApprovals || 0}</p>
+                <p className="text-2xl font-semibold">{(stats as any)?.pendingApprovals || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -80,7 +80,7 @@ export default function Dashboard() {
                 <p className="text-sm font-medium text-muted-foreground">
                   Upcoming Events
                 </p>
-                <p className="text-2xl font-semibold">{stats?.upcomingEvents || 0}</p>
+                <p className="text-2xl font-semibold">{(stats as any)?.upcomingEvents || 0}</p>
               </div>
             </div>
           </CardContent>
@@ -102,9 +102,9 @@ export default function Dashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            {todaySchedule && todaySchedule.length > 0 ? (
+            {(todaySchedule as any) && (todaySchedule as any).length > 0 ? (
               <div className="space-y-4">
-                {todaySchedule.slice(0, 3).map((item: any) => (
+                {(todaySchedule as any).slice(0, 3).map((item: any) => (
                   <div key={item.id} className="flex items-start space-x-3">
                     <div className="flex-shrink-0 w-12 text-center">
                       <div className="text-sm font-medium text-gray-900 dark:text-white">
@@ -165,9 +165,9 @@ export default function Dashboard() {
           </div>
         </CardHeader>
         <CardContent>
-          {recentHighlights && recentHighlights.length > 0 ? (
+          {(recentHighlights as any) && (recentHighlights as any).length > 0 ? (
             <div className="space-y-4">
-              {recentHighlights.slice(0, 3).map((highlight: any) => (
+              {(recentHighlights as any).slice(0, 3).map((highlight: any) => (
                 <div
                   key={highlight.id}
                   className="border-l-4 border-primary pl-4"

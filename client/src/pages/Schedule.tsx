@@ -116,7 +116,7 @@ export default function Schedule() {
     }
   };
 
-  const isAdmin = user?.role === "admin";
+  const isAdmin = (user as any)?.role === "admin";
 
   // Calendar generation
   const year = currentMonth.getFullYear();
@@ -134,7 +134,7 @@ export default function Schedule() {
   }
 
   const schedulesByDate = new Map();
-  schedules?.forEach((schedule: any) => {
+  (schedules as any)?.forEach((schedule: any) => {
     const date = schedule.date;
     if (!schedulesByDate.has(date)) {
       schedulesByDate.set(date, []);
@@ -353,9 +353,9 @@ export default function Schedule() {
           <CardTitle>Upcoming Events</CardTitle>
         </CardHeader>
         <CardContent>
-          {schedules && schedules.length > 0 ? (
+          {(schedules as any) && (schedules as any).length > 0 ? (
             <div className="space-y-4">
-              {schedules
+              {(schedules as any)
                 .filter((schedule: any) => new Date(schedule.date) >= new Date())
                 .slice(0, 5)
                 .map((schedule: any) => (

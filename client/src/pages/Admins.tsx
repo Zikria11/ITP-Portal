@@ -158,7 +158,7 @@ export default function Admins() {
                   </tr>
                 </thead>
                 <tbody>
-                  {admins?.map((admin: any) => (
+                  {(admins as any)?.map((admin: any) => (
                     <tr key={admin.id} className="border-b">
                       <td className="py-4 px-4">
                         <div className="flex items-center">

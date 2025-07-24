@@ -184,8 +184,8 @@ export class DatabaseStorage implements IStorage {
       .from(attendance)
       .where(
         and(
-          eq(attendance.studentId, attendanceData.studentId),
-          eq(attendance.date, attendanceData.date)
+          eq(attendance.studentId, attendanceData.studentId!),
+          eq(attendance.date, attendanceData.date!)
         )
       );
 

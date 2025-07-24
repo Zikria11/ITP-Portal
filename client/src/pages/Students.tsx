@@ -123,7 +123,7 @@ export default function Students() {
       .toUpperCase();
   };
 
-  const filteredStudents = students?.filter((student: any) =>
+  const filteredStudents = (students as any)?.filter((student: any) =>
     student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.regNo.toLowerCase().includes(searchTerm.toLowerCase())
@@ -147,7 +147,7 @@ export default function Students() {
                 className="gap-2 bg-yellow-50 border-yellow-200 text-yellow-800 hover:bg-yellow-100 dark:bg-yellow-900 dark:border-yellow-700 dark:text-yellow-200"
               >
                 <Clock className="h-4 w-4" />
-                Pending Approvals ({pendingStudents?.length || 0})
+                Pending Approvals ({(pendingStudents as any)?.length || 0})
               </Button>
               <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
@@ -194,7 +194,7 @@ export default function Students() {
       </Card>
 
       {/* Pending Approvals */}
-      {pendingStudents && pendingStudents.length > 0 && (
+      {(pendingStudents as any) && (pendingStudents as any).length > 0 && (
         <Card>
           <CardHeader>
             <CardTitle className="text-yellow-600 dark:text-yellow-400">
@@ -203,7 +203,7 @@ export default function Students() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {pendingStudents.map((student: any) => (
+              {(pendingStudents as any).map((student: any) => (
                 <div
                   key={student.id}
                   className="flex items-center justify-between p-4 border border-yellow-200 dark:border-yellow-700 rounded-lg bg-yellow-50 dark:bg-yellow-900/20"
@@ -283,7 +283,7 @@ export default function Students() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredStudents?.map((student: any) => (
+                  {(filteredStudents as any)?.map((student: any) => (
                     <tr key={student.id} className="border-b">
                       <td className="py-4 px-4">
                         <div className="flex items-center">
